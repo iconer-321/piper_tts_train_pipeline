@@ -19,8 +19,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /piper_tts_train_pipeline
-COPY . .
 
-ENTRYPOINT ["./setup_piper.sh"]
+# Copy only setup script first so it can run before copying the rest
+COPY setup_piper.sh .
+
+# Run setup script
+RUN chmod +x setup_piper.sh && ./setup_piper.sh
+
+# Now copy all files (after setup is done)
+COPY . .
 
 CMD ["bash"]
