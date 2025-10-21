@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e  # Exit immediately on error
-
+ROOT_DIR=$(pwd)
 echo "🔧 [Setup] Updating package lists and installing system dependencies..."
 
 # Install system dependencies
@@ -47,5 +47,5 @@ chmod +x build_monotonic_align.sh
 
 # Run the monotonic alignment build script
 ./build_monotonic_align.sh
-
+cd "$ROOT_DIR"
 echo "🎉 [Setup Complete] Piper environment is ready."
