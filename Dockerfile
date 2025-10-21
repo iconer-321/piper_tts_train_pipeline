@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN python3 -m venv $VIRTUAL_ENV
 RUN pip install --no-cache-dir pip==23.3.1 setuptools wheel
 RUN pip install --no-cache-dir numpy==1.24.4 torchmetrics==0.11.4
+RUN pip install python-dotenv==1.1.1
+RUN pip install boto3==1.39.4
 
 
 RUN mkdir /bn_training
