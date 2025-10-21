@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create a virtual environment
 RUN python -m venv $VIRTUAL_ENV
 
-WORKDIR /bn_training
+WORKDIR /piper_tts_train_pipeline
 COPY . .
 
 ENTRYPOINT ["./setup_piper.sh"]
