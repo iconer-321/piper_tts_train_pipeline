@@ -23,7 +23,7 @@ class PiperDatasetPreprocessor:
 
     def preprocess(self):
         command = [
-            "python3", "-m", "piper_train.preprocess",
+            "python3", "-m", "viva_piper_fork/src/python/piper_train.preprocess",
             "--language", self.language,
             "--input-dir", self.input_dir,
             "--output-dir", self.output_dir,

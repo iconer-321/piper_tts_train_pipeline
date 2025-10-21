@@ -13,14 +13,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
+# Create a virtual environment
+RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /piper_tts_train_pipeline
 COPY . .
 
 ENTRYPOINT ["./setup_piper.sh"]
-
-WORKDIR /piper_tts_train_pipeline/viva_piper_fork/src/python
-
-COPY /piper_tts_train_pipeline .
 
 CMD ["bash", "-c", "source $VIRTUAL_ENV/bin/activate && python3 main.py"]

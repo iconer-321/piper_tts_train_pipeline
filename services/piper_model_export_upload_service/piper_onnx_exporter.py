@@ -23,7 +23,7 @@ class PiperONNXExporter:
         print(f"📁 [ONNX Export] Latest checkpoint found: {checkpoint_path}")
 
         command = [
-            "python3", "-m", "piper_train.export_onnx",
+            "python3", "-m", "viva_piper_fork/src/python/piper_train.export_onnx",
             checkpoint_path, self.onnx_output_path,
         ]
 
