@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from piper_model_uploader import PiperModelUploader
-from piper_model_zipper import PiperModelZipper
-from piper_onnx_exporter import PiperONNXExporter
+from services.piper_model_export_upload_service.piper_model_uploader import PiperModelUploader
+from services.piper_model_export_upload_service.piper_model_zipper import PiperModelZipper
+from services.piper_model_export_upload_service.piper_onnx_exporter import PiperONNXExporter
 
 
 class PiperModelExportService:
