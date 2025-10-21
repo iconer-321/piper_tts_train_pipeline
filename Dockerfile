@@ -1,24 +1,29 @@
-FROM python:3.10
+FROM python:3.10-slim
 
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     build-essential \
-    ffmpeg \
     espeak-ng \
     sox \
-    libsndfile1-dev \
+    ffmpeg \
     wget \
+    libsndfile1-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a virtual environment
-RUN python -m venv $VIRTUAL_ENV
+RUN python3 -m venv $VIRTUAL_ENV
+RUN pip install --no-cache-dir pip==23.3.1 setuptools wheel
+RUN pip install --no-cache-dir numpy==1.24.4 torchmetrics==0.11.4
 
-WORKDIR /piper_tts_train_pipeline
+
+RUN mkdir /bn_training
+WORKDIR /bn_training
+
+RUN git clone https://github.com/rhasspy/piper.git
+WORKDIR /bn_training/piper/src/python
+RUN pip install --no-cache-dir -e .
+RUN chmod +x ./build_monotonic_align.sh && ./build_monotonic_align.sh
 COPY . .
 
-ENTRYPOINT ["./setup_piper.sh"]
-
-CMD ["bash", "-c", "source $VIRTUAL_ENV/bin/activate && python3 main.py"]
+CMD ["bash"]
