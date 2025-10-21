@@ -1,6 +1,6 @@
-from pathlib import Path
 import csv
-
+import shutil
+from pathlib import Path
 
 class MetadataGenerator:
     def __init__(
@@ -19,24 +19,36 @@ class MetadataGenerator:
             raise FileNotFoundError(f"WAV directory '{self.wav_dir}' does not exist.")
 
     def generate(self):
+        existing_metadata = self.txt_dir / "metadata.csv"
+
+        # ✅ Case 1: metadata.csv already exists — copy it to output_csv location
+        if existing_metadata.exists():
+            print(f"✅ Found existing metadata.csv in '{self.txt_dir}', copying to '{self.output_csv}'...")
+            shutil.copy2(existing_metadata, self.output_csv)
+            print(f"📋 Copied '{existing_metadata}' → '{self.output_csv}'")
+            return
+
+        # ❌ Case 2: No metadata.csv — run legacy generation
+        print("⚙️ No existing metadata found — generating from text files...")
         self.output_csv.parent.mkdir(parents=True, exist_ok=True)
         lines = []
 
         for txt_file in self.txt_dir.rglob("*.txt"):
             base_name = txt_file.stem
             converted_wav = self.wav_dir / f"{base_name}.wav"
-            print(f"Found converted WAV for {base_name}.txt")
+            print(f"Checking {base_name}.txt...")
 
             if converted_wav.exists():
                 with open(txt_file, "r", encoding="utf-8") as f:
                     text = f.read().strip()
-                    print(converted_wav.name, text)
                     lines.append([converted_wav.name, text])
+                    print(f"✅ Matched: {converted_wav.name} | {text}")
             else:
-                print(f"Warning: Converted WAV not found for {base_name}.txt")
-            txt_file.unlink()
+                print(f"⚠️ Missing WAV for: {base_name}.txt")
+
+            txt_file.unlink()  # remove processed txt file
+
         with open(self.output_csv, "w", encoding="utf-8", newline="") as csvfile:
             writer = csv.writer(csvfile, delimiter="|")
             writer.writerows(lines)
-
-        print(f"Metadata written to: {self.output_csv}")
+        print(f"✅ Generated metadata CSV: {self.output_csv}")
