@@ -4,12 +4,10 @@ set -e  # Exit immediately on error
 echo "🔧 [Setup] Updating package lists and installing system dependencies..."
 
 # Install system dependencies
-sudo apt update
-sudo apt install -y \
+apt update
+apt install -y \
     ffmpeg \
     espeak-ng \
-    python3.10-dev \
-    python3.10-venv
 
 echo "✅ [Setup] System packages installed."
 

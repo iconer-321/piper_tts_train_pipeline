@@ -20,7 +20,7 @@ RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /bn_training
 COPY . .
-RUN chmod +x setup_piper.sh
-RUN bash ./setup_piper.sh
+
+ENTRYPOINT ["./setup_piper.sh"]
 
 CMD ["bash"]
