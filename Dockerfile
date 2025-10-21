@@ -21,6 +21,6 @@ ENTRYPOINT ["./setup_piper.sh"]
 
 WORKDIR /piper_tts_train_pipeline/viva_piper_fork/src/python
 
-COPY . .
+COPY /piper_tts_train_pipeline .
 
 CMD ["bash", "-c", "source $VIRTUAL_ENV/bin/activate && python3 main.py"]

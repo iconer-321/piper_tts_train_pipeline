@@ -19,13 +19,13 @@ class MetadataGenerator:
             raise FileNotFoundError(f"WAV directory '{self.wav_dir}' does not exist.")
 
     def generate(self):
-        existing_metadata = self.txt_dir / "metadata.csv"
+        found_metadata = next(self.txt_dir.rglob("metadata.csv"), None)
 
-        # ✅ Case 1: metadata.csv already exists — copy it to output_csv location
-        if existing_metadata.exists():
-            print(f"✅ Found existing metadata.csv in '{self.txt_dir}', copying to '{self.output_csv}'...")
-            shutil.copy2(existing_metadata, self.output_csv)
-            print(f"📋 Copied '{existing_metadata}' → '{self.output_csv}'")
+        if found_metadata:
+            print(f"✅ Found existing metadata.csv in '{found_metadata.parent}', copying to '{self.output_csv}'...")
+            self.output_csv.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(found_metadata, self.output_csv)
+            print(f"📋 Copied: '{found_metadata}' → '{self.output_csv}'")
             return
 
         # ❌ Case 2: No metadata.csv — run legacy generation
