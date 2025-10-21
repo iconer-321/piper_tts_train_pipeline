@@ -1,0 +1,33 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Cython debug symbols
+cython_debug/
+
+# Environment directories
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VSCode settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Configuration files
+*.env
+
+# Misc
+*.swp
+*.swo
+
+# Piper files
+piper/
+viva_piper_fork/

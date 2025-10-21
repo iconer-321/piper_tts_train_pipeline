@@ -1,0 +1,8 @@
+INPUT_DIR="datasets"
+CHECKPOINT_FILE="epoch=2164-step=1355540.ckpt"
+CHECKPOINT_URL="https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/lessac/medium/epoch%3D2164-step%3D1355540.ckpt"
+LANGUAGE="bn"
+SAMPLE_RATE="22050"
+MAX_EPOCHS="6000"
+MAX_WORKERS="1"
+DEVICES="1"

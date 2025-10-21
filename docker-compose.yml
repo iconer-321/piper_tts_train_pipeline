@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  bn_training:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/bn_training
+    working_dir: /bn_training
+    command: python main.py

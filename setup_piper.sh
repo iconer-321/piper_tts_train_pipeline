@@ -1,0 +1,50 @@
+#!/bin/bash
+set -e  # Exit immediately on error
+
+echo "🔧 [Setup] Updating package lists and installing system dependencies..."
+
+# Install system dependencies
+sudo apt update
+sudo apt install -y \
+    ffmpeg \
+    espeak-ng \
+    python3.10-dev \
+    python3.10-venv
+
+echo "✅ [Setup] System packages installed."
+
+# Create and activate virtual environment
+
+
+
+echo "🐍 [Setup] Creating Python virtual environment..."
+
+# Create virtual environment
+python3.10 -m venv .venv
+source .venv/bin/activate
+
+# Downgrade pip to a version compatible with legacy metadata
+python3.10 -m pip install pip==23.3.1
+
+# Install required Python packages inside the virtual environment
+pip install numpy==1.24.4
+pip install torchmetrics==0.11.4
+pip install python-dotenv==1.1.1
+pip install boto3==1.39.4
+
+# Go to Piper directory
+git clone -q https://github.com/masumr/viva_piper_fork.git
+cd viva_piper_fork/src/python
+
+
+# Install the local package in editable mode
+python3.10 -m pip install --upgrade wheel setuptools
+pip install -e .
+
+# Make the script executable
+chmod +x build_monotonic_align.sh
+
+# Run the monotonic alignment build script
+./build_monotonic_align.sh
+
+echo "🎉 [Setup Complete] Piper environment is ready."
