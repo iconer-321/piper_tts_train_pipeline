@@ -15,7 +15,7 @@ class PiperModelTrainer:
 
     def train(self):
         command = [
-            "python3", "-m", "viva_piper_fork/src/python/piper_train",
+            "python3", "-m", "piper_train",
             "--dataset-dir", self.dataset_path,
             "--accelerator", "gpu",
             "--devices", self.devices,
