@@ -39,4 +39,6 @@ class PiperDatasetPreprocessor:
             subprocess.run(command, check=True)
             print("Preprocessing completed successfully.")
         except subprocess.CalledProcessError as e:
+            import traceback
+            traceback.print_exc()
             print(f"Preprocessing failed: {e}")
