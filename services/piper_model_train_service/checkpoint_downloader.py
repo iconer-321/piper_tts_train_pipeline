@@ -1,5 +1,11 @@
-import requests
+import os
 from pathlib import Path
+
+import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class CheckpointDownloader:
     def __init__(self, url: str, checkpoint_dir: str = "checkpoints", filename: str = None):
@@ -17,7 +23,8 @@ class CheckpointDownloader:
 
         try:
             print(f"⬇️  Downloading checkpoint to: {self.save_path}")
-            response = requests.get(self.url, stream=True)
+            headers = {"Authorization": f"Bearer {os.getenv('HF_TOKEN')}"}
+            response = requests.get(self.url, headers=headers, stream=True)
             response.raise_for_status()
 
             with open(self.save_path, "wb") as f:
