@@ -17,13 +17,6 @@ echo "✅ [Setup] System packages installed."
 
 echo "🐍 [Setup] Creating Python virtual environment..."
 
-if [ ! -d "$VIRTUAL_ENV" ]; then
-    echo "🐍 [Setup] Creating Python virtual environment..."
-    python3 -m venv "$VIRTUAL_ENV"
-fi
-
-source "$VIRTUAL_ENV/bin/activate"
-
 # Downgrade pip to a version compatible with legacy metadata
 python3.10 -m pip install pip==23.3.1
 
