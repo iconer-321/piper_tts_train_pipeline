@@ -36,4 +36,6 @@ class PiperModelTrainer:
             subprocess.run(command, check=True)
             print("✅ Training completed successfully.")
         except subprocess.CalledProcessError as e:
+            import traceback
+            traceback.print_exc()
             print(f"❌ Training failed: {e}")

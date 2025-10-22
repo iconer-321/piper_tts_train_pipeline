@@ -31,6 +31,8 @@ class PiperONNXExporter:
             subprocess.run(command, check=True)
             print(f"✅ [ONNX Export] Model exported to: {self.onnx_output_path}")
         except subprocess.CalledProcessError as e:
+            import traceback
+            traceback.print_exc()
             raise RuntimeError(f"❌ [ONNX Export] Failed to export model: {e}")
 
         try:
