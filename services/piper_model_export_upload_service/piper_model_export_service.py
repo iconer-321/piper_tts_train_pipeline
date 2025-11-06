@@ -14,20 +14,21 @@ class PiperModelExportService:
 
     def export(self):
         print("🚀 [Service] Starting Piper model export service...")
-        self._export_onnx_model()
+        checkpoint_path = self._export_onnx_model()
         self._zip_model_directory()
-        self._upload_model_to_s3()
+        self._upload_model_to_s3(checkpoint_path)
         print("✅ [Service] All steps completed successfully.")
 
-    def _export_onnx_model(self):
+    def _export_onnx_model(self) -> str:
         print("🔧 [Step 1] Exporting ONNX model...")
         exporter = PiperONNXExporter(
             lightning_logs_dir=str(self.lightning_logs_dir),
             onnx_output_path=str(self.onnx_output_path),
             training_config_path=str(self.training_config_path)
         )
-        exporter.export()
+        checkpoint_path = exporter.export()
         print("✅ [Step 1] ONNX model export complete.\n")
+        return checkpoint_path
 
     def _zip_model_directory(self):
         print("📦 [Step 2] Zipping model directory...")
@@ -35,8 +36,9 @@ class PiperModelExportService:
         self.zipper.zip_model()
         print(f"✅ [Step 2] Model zipped: {self.zipper.output_zip}\n")
 
-    def _upload_model_to_s3(self):
-        print("☁️ [Step 3] Uploading model to S3...")
+    def _upload_model_to_s3(self, checkpoint_path: str):
+        print("☁️ [Step 3] Uploading model and checkpoint to S3...")
         uploader = PiperModelUploader()
-        uploader.upload_zip(zip_file_path=self.zipper.output_zip)
+        uploader.upload_file(file_path=self.zipper.output_zip)
+        uploader.upload_file(file_path=checkpoint_path)
         print("✅ [Step 3] Upload completed.\n")

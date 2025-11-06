@@ -41,6 +41,7 @@ class PiperONNXExporter:
             print(f"📄 [ONNX Export] Copied config to: {onnx_json_path}")
         except Exception as e:
             raise RuntimeError(f"❌ [ONNX Export] Failed to copy config: {e}")
+        return checkpoint_path
 
     @staticmethod
     def _find_latest_checkpoint_file(lightning_logs_dir: str, extension: str = ".ckpt") -> Optional[str]:
@@ -58,4 +59,3 @@ class PiperONNXExporter:
                             latest_modification_time = modification_time
                             latest_checkpoint_file = checkpoint_file
         return str(latest_checkpoint_file) if latest_checkpoint_file else None
-

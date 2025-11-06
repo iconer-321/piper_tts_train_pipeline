@@ -18,17 +18,16 @@ class PiperModelUploader:
             aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
         )
 
-    def upload_zip(self, zip_file_path):
-        zip_path = Path(zip_file_path)
-        if not zip_path.exists():
-            raise FileNotFoundError(f"File {zip_file_path} not found.")
+    def upload_file(self, file_path: str, s3_key: str = None):
+        path = Path(file_path)
+        if not path.exists():
+            raise FileNotFoundError(f"File {file_path} not found.")
 
-        s3_key = zip_path.name
+        if s3_key is None:
+            s3_key = path.name
 
         try:
-            self.s3_client.upload_file(str(zip_path), self.bucket_name, s3_key)
-            print(f"✅ Successfully uploaded: {zip_path.name} → s3://{self.bucket_name}/{s3_key}")
+            self.s3_client.upload_file(str(path), self.bucket_name, s3_key)
+            print(f"✅ Successfully uploaded: {path.name} → s3://{self.bucket_name}/{s3_key}")
         except ClientError as e:
             print(f"❌ Failed to upload: {e}")
-
-
