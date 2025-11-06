@@ -30,7 +30,7 @@ class PiperFullTrainingService:
         self._converted_dir = "wavs"
         self._preprocessed_dir = "preprocessed"
         self._metadata_file = "metadata.csv"
-        self._model_dir = "models"
+        self._model_dir = f"epoch-{self.max_epochs}"
 
     def run(self):
         try:
@@ -81,7 +81,7 @@ class PiperFullTrainingService:
         exporter = PiperModelExportService(
             model_dir=self._model_dir,
             lightning_logs_dir=f"{self._preprocessed_dir}/lightning_logs",
-            onnx_output_path=f"{self._model_dir}/{self.language}_model.onnx",
+            onnx_output_path=f"{self._model_dir}/{self._model_dir}.onnx",
             training_config_path=f"{self._preprocessed_dir}/config.json",
         )
         exporter.export()
